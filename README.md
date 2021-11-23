@@ -15,10 +15,20 @@ pip install requirements.txt
 
 TO BE DONE
 
+## Project Timeline
+
+DATE  | AVERAGE UPTIME
+------------- | -------------
+11/23/2021 |  2 HOURS
+TBD  |  TBD
+
+
+
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 Please make sure to update tests as appropriate.
+
 
 ## License
 [Unlicence](https://choosealicense.com/licenses/unlicence/)
