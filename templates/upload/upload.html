@@ -3,10 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <title>GAME UPLOAD</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/upload/upload.css')}}">
+    <!-- IMPORTING STAIC FILES : CSS, JS and JQUERY-->
+     <link rel="stylesheet" href="{{ url_for('static', filename='css/upload/upload.css')}}">
+    <script src="{{ url_for('static', filename='js/upload/upload.js')}}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="  crossorigin="anonymous"></script>
 </head>
 <body>
-    <H1>CONTENT TO BE DONE</H1>
-    <P>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab animi asperiores cum deserunt dolor, illo iusto laboriosam laborum nihil odio odit quasi quia quidem recusandae saepe sapiente tempore velit voluptate!</P>
+    <div class="container">
+        <div class="content">
+            <select name="games" id="game_selector" placeholder="Please type game name or select from the list">
+                 <!-- This part will be dynamically change. TBD Flask Part-->
+                <option value="Game_Name1"></option>
+                <option value="Game_Name2"></option>
+                <option value="Game_Name3"></option>
+            </select>
+        </div>
+    </div>
+    <div class="container">
+        <div class="slider-1">
+            <img src="img_path1" alt="">
+            <img src="img_path2" alt="">
+            <img src="img_path3" alt="">
+            <img src="img_path4" alt="">
+        </div>
+        <div class="slider-2">
+            <img src="img_path1" alt="">
+            <img src="img_path2" alt="">
+            <img src="img_path3" alt="">
+            <img src="img_path4" alt="">
+        </div>
+    </div>
+
 </body>
 </html>
