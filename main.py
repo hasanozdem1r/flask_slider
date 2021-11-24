@@ -1,9 +1,7 @@
-import flask
 from flask import render_template,request,redirect,url_for
 from model import mysql_obj,close_connection,create_record,user_authentication
 from app import app
-
-
+from requests import get
 
 # http://127.0.0.1.5000
 @app.route('/',methods=['GET','POST'])
@@ -11,7 +9,7 @@ def welcome_page():
     """
     This method is used to redirect sign in and sign up page.
     Method allows users to sign in and sign up to system
-    :return: flask.Response
+    :return: <flask.Response> HTML view
     """
     if request.method=='GET':
         return render_template('welcome/welcome_page.html')
@@ -48,24 +46,39 @@ def welcome_page():
                 close_connection(connection, db_cursor)
                 return redirect("random_select")
 
+# HELPER FUNCTIONS
 
-def get_form_data_signup():
+def get_form_data_signup()->tuple:
+    """
+    This method is used to retrieve sign-up form data.
+    :return: <tuple> user authentication data
+    """
     username: str = str(request.form.get('usrnm'))
     email: str = str(request.form.get('eml'))
     password: str = str(request.form.get('pswd'))
     return username,email, password
 
-def get_form_data_login():
+
+def get_form_data_login()->tuple:
+    """
+    This method is used to retrieve sign-im form data.
+    :return: <tuple> user authentication data
+    """
     email = str(request.form.get('eml'))
     password = str(request.form.get('pswd'))
     return email, password
 
 
 # http://127.0.0.1.5000/random_select
-@app.route('/random_select')
+@app.route('/random_select',methods=['GET','POST'])
 def random_select():
-    return render_template('randomize/randomize.html')
-
+    if request.method=='GET':
+        apps:list=get("http://localhost:80/apps-api/v1/apps").json()
+        apps_name=[app_name[1] for app_name in apps]
+        return render_template('randomize/randomize.html',apps_name=apps_name)
+    elif request.method=='POST':
+        select = request.form.get('game_select')
+        return (str(select))  # just to see what select is
 
 # http://127.0.0.1.5000/upload_file
 @app.route('/upload_file')
