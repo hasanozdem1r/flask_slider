@@ -9,7 +9,7 @@ mysql_obj=MySQL()
 conf_obj=ConfigParser()
 
 # read all information from config file
-conf_obj.read('config.ini')
+conf_obj.read('database_config.ini')
 user_info=conf_obj["USERINFO"]
 db_info=conf_obj["DB_CONFIG"]
 
@@ -48,12 +48,19 @@ def close_connection(connection, db_cursor):
     connection.close()
 
 
+def user_authentication(sql_query:str,query_data:tuple)->tuple:
+    connection = mysql_obj.connect()
+    db_cursor = connection.cursor()
+    db_cursor.execute(sql_query, query_data)
+    account = db_cursor.fetchall()
+    return account,connection,db_cursor
+
 # this section has been created testing connection independently
 if __name__=='__main__':
     try:
-        #mysql_obj.connect()
-        #connection = mysql_obj.connect()
-        create_record("INSERT INTO apps_case_study.users(username,email,password) VALUES(%s,%s,%s);",('apps1','apps1@gmail.com','apps1'))
+        mysql_obj.connect()
+        connection = mysql_obj.connect()
+        #create_record("INSERT INTO apps_case_study.users(username,email,password) VALUES(%s,%s,%s);",('apps1','apps1@gmail.com','apps1'))
         print('Connection Successful')
     except Exception as error:
         print(f'Connection failed error message: {error}')
