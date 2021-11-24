@@ -19,7 +19,8 @@ TO BE DONE
 
 DATE  | AVERAGE UPTIME
 ------------- | -------------
-11/23/2021 |  2 HOURS
+11/23/2021 |  4 HOURS
+11/24/2021 |  2 HOURS
 TBD  |  TBD
 
 
