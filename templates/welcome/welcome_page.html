@@ -2,7 +2,7 @@
 <html lang="en" >
 <head>
   <meta charset="UTF-8">
-  <title>Sign up / Login Form</title>
+  <title>Sign up - Sign in | APPS </title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/welcome/welcome.css')}}">
 
 </head>
@@ -20,21 +20,21 @@
 		<input type="checkbox" id="chk" aria-hidden="true">
 
 			<div class="signup">
-				<form>
+				<form method="post">
 					<label for="chk" aria-hidden="true">Sign up</label>
-					<input type="text" name="txt" placeholder="Username" required="">
-					<input type="email" name="email" placeholder="Email" required="">
+					<input type="text" name="usrnm" placeholder="Username" required="">
+					<input type="email" name="eml" placeholder="Email" required="">
 					<input type="password" name="pswd" placeholder="Password" required="">
-					<button>Sign up</button>
+					<button type="submit" name="signup_btn" value="Sign up">Sign up</button>
 				</form>
 			</div>
 
 			<div class="login">
-				<form>
-					<label for="chk" aria-hidden="true">Login</label>
-					<input type="email" name="email" placeholder="Email" required="">
+				<form method="post">
+					<label for="chk" aria-hidden="true">Sign in</label>
+					<input type="email" name="eml" placeholder="Email" required="">
 					<input type="password" name="pswd" placeholder="Password" required="">
-					<button>Login</button>
+                    <button type="submit" name="signin_btn" value="Sign in">Sign in</button>
 				</form>
 			</div>
 	</div>
