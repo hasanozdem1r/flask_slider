@@ -3,37 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <title>GAME UPLOAD</title>
-    <!-- IMPORTING STAIC FILES : CSS, JS and JQUERY-->
+    <!-- IMPORTING STATIC FILES : CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/randomize/randomize.css')}}">
+    <!-- IMPORTING STATIC FILES : JS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="  crossorigin="anonymous"></script>
     <script src="{{ url_for('static', filename='js/randomize/randomize.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+
 </head>
+
 <body>
     <div class="container">
         <div class="content">
-            <select name="games" id="game_selector" placeholder="Please type game name or select from the list">
-                 <!-- This part will be dynamically change. TBD Flask Part-->
-                <option value="Game_Name1"></option>
-                <option value="Game_Name2"></option>
-                <option value="Game_Name3"></option>
+            <select id='my_select' name="game_select" style="width:400px;">
+                <option selected disabled>Select Game</option>
+                {% for app_name in apps_name %}
+                <option value="{{ app_name }}">{{ app_name}}</option>
+                {% endfor %}
             </select>
         </div>
     </div>
     <div class="container">
         <div class="slider-1">
-            <img src="{{ url_for('static', filename='img/app1.jpeg')}}" alt="">
-            <img src="{{ url_for('static', filename='img/app1.jpeg')}}" alt="">
-            <img src="{{ url_for('static', filename='img/app1.jpeg')}}" alt="">
-            <img src="{{ url_for('static', filename='img/app1.jpeg')}}" alt="">
+            <img src="{{ url_for('static', filename='img/paşam.jpg')}}" alt="">
+            <img src="{{ url_for('static', filename='img/paşam.jpg')}}" alt="">
+            <img src="{{ url_for('static', filename='img/paşam.jpg')}}" alt="">
+            <img src="{{ url_for('static', filename='img/paşam.jpg')}}" alt="">
         </div>
         <div class="slider-2">
-            <img src="{{ url_for('static', filename='img/app1.jpeg')}}" alt="">
-            <img src="{{ url_for('static', filename='img/app1.jpeg')}}" alt="">
-            <img src="{{ url_for('static', filename='img/app1.jpeg')}}" alt="">
-            <img src="{{ url_for('static', filename='img/app1.jpeg')}}" alt="">
+            <img src="{{ url_for('static', filename='img/paşam.jpg')}}" alt="">
+            <img src="{{ url_for('static', filename='img/paşam.jpg')}}" alt="">
+            <img src="{{ url_for('static', filename='img/paşam.jpg')}}" alt="">
+            <img src="{{ url_for('static', filename='img/paşam.jpg')}}" alt="">
         </div>
     </div>
 
 </body>
+
 </html>
