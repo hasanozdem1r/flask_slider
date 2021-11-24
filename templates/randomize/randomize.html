@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <title>GAME UPLOAD</title>
     <!-- IMPORTING STAIC FILES : CSS, JS and JQUERY-->
-     <link rel="stylesheet" href="{{ url_for('static', filename='css/upload/upload.css')}}">
-    <script src="{{ url_for('static', filename='js/upload/upload.js')}}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/randomize/randomize.css')}}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="  crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='js/randomize/randomize.js')}}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -21,16 +22,16 @@
     </div>
     <div class="container">
         <div class="slider-1">
-            <img src="img_path1" alt="">
-            <img src="img_path2" alt="">
-            <img src="img_path3" alt="">
-            <img src="img_path4" alt="">
+            <img src="{{ url_for('static', filename='img/app1.jpeg')}}" alt="">
+            <img src="{{ url_for('static', filename='img/app1.jpeg')}}" alt="">
+            <img src="{{ url_for('static', filename='img/app1.jpeg')}}" alt="">
+            <img src="{{ url_for('static', filename='img/app1.jpeg')}}" alt="">
         </div>
         <div class="slider-2">
-            <img src="img_path1" alt="">
-            <img src="img_path2" alt="">
-            <img src="img_path3" alt="">
-            <img src="img_path4" alt="">
+            <img src="{{ url_for('static', filename='img/app1.jpeg')}}" alt="">
+            <img src="{{ url_for('static', filename='img/app1.jpeg')}}" alt="">
+            <img src="{{ url_for('static', filename='img/app1.jpeg')}}" alt="">
+            <img src="{{ url_for('static', filename='img/app1.jpeg')}}" alt="">
         </div>
     </div>
 

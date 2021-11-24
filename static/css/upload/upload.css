@@ -8,15 +8,3 @@ body{
 	font-family: 'Jost', sans-serif;
 	background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
 }
-.container{
-    display:flex;
-    justify-content: space-between;
-    margin: 60px 10%;
-}
-.slider-1, .slider-2{
-    width: 400px!important;
-    overflow: hidden;
-}
-.slider-1 img, .slider-2 img{
-    width: 400px!important;
-}
