@@ -47,7 +47,6 @@ def welcome_page():
                 return redirect("random_select")
 
 # HELPER FUNCTIONS
-
 def get_form_data_signup()->tuple:
     """
     This method is used to retrieve sign-up form data.
@@ -57,7 +56,6 @@ def get_form_data_signup()->tuple:
     email: str = str(request.form.get('eml'))
     password: str = str(request.form.get('pswd'))
     return username,email, password
-
 
 def get_form_data_login()->tuple:
     """
@@ -75,10 +73,12 @@ def random_select():
     if request.method=='GET':
         apps:list=get("http://localhost:80/apps-api/v1/apps").json()
         apps_name=[app_name[1] for app_name in apps]
-        return render_template('randomize/randomize.html',apps_name=apps_name)
+        images:list=get("http://localhost/apps-api/v1/images?app-id=51").json()
+        images_path=[img_path[1] for img_path in images]
+        return render_template('randomize/randomize.html',apps_name=apps_name,images_path=images_path)
     elif request.method=='POST':
         select = request.form.get('game_select')
-        return (str(select))  # just to see what select is
+        return render_template("randomize/randomize.html")
 
 # http://127.0.0.1.5000/upload_file
 @app.route('/upload_file')
