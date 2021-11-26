@@ -21,8 +21,8 @@ DATE  | AVERAGE UPTIME
 ------------- | -------------
 11/23/2021 |  4 HOURS
 11/24/2021 |  2 HOURS
-TBD  |  TBD
-
+11/25/2021  |  INTERVIEW DAY - 0 HOUR
+11/26/2021 |  2 HOURS
 
 
 ## Contributing
