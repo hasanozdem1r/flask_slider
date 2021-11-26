@@ -1,10 +1,22 @@
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for,flash,session
 from app import app
 # helper methods for retrieve data and api call
 from helpers import get_form_data_signup, get_form_data_login, get_app_id, get_apps_name, get_images_path
 # database operations
 from model import close_connection, create_record, user_authentication
+from functools import wraps
 
+
+def login_required(func):
+    @wraps(func)
+    def wrap(*args, **kwargs):
+        if 'logged_in' in session:
+            return func(*args, **kwargs)
+        else:
+            flash("You need to login first")
+            return redirect(url_for('welcome_page'))
+
+    return wrap
 
 # http://127.0.0.1.5000
 @app.route('/', methods=['GET', 'POST'])
@@ -31,6 +43,7 @@ def welcome_page():
                 account, connection, db_cursor = user_authentication(sql_query, query_data)
                 # email and password matched. Sign in successful
                 if account:
+                    session['logged_in']=True
                     close_connection(connection, db_cursor)
                     return redirect("random_select")
                 # email and password did not matched. Sign in unsuccessful
@@ -55,6 +68,7 @@ def welcome_page():
                 return redirect(url_for('welcome_page'))
             # user is not existed. You can register to system
             else:
+                session['logged_in'] = True
                 # query and data preparation
                 sql_query: str = "INSERT INTO apps_case_study.users (username,email,password) VALUES(%s,%s,%s)"
                 query_data: tuple = (email, email, password,)
@@ -66,6 +80,7 @@ def welcome_page():
 
 # http://127.0.0.1.5000/random_select
 @app.route('/random_select', methods=['GET', 'POST'])
+@login_required
 def random_select():
     # get apps name with api call to fulfill dropdown
     apps_name = get_apps_name()
@@ -88,6 +103,7 @@ def random_select():
 
 # http://127.0.0.1.5000/upload_file
 @app.route('/upload_file')
+@login_required
 def upload_file():
     return render_template('upload/upload.html')
 
