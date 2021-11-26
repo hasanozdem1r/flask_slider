@@ -6,23 +6,42 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link rel="stylesheet" href="{{ url_for('static',filename='css/upload/upload.css') }}">
+    <style>
+           .right {
+            {% if req_method == 'GET' %}
+                {% block get_req %}
+                     background-image: url({{ url_for('static', filename='img/img_upload/'+image_path)}});
+                {% endblock get_req %}
+            {% else %}
+                {% block post_req %}
+                     background-image: url({{ url_for('static', filename='img/img_upload/'+image_path)}});
+                {% endblock post_req %}
+            {% endif %}
+           }
+    </style>
   </head>
   <body>
     <div class="container">
       <div class="left">
         <div class="header">
-            <img src="{{ url_for('static',filename='img/default/apps_logo.png') }}" alt="" width="300" height="150">
-            <br><br><br><br><br>
-          <h2 class="animation a1">Upload Images</h2>
-          <h4 class="animation a2">Please fulfill all mandatory fields</h4>
+             <img src="{{ url_for('static',filename='img/img_random/apps_logo.png') }}" alt="" width="300" height="150">
+              <br><br><br><br><br>
+              <h2 class="animation a1">Upload Images</h2>
+              <h4 class="animation a2">Please fulfill all mandatory fields</h4>
         </div>
-        <div class="form">
-            <input type="text" class="form-field animation a3" placeholder="Application ID">
-            <input type="text" class="form-field animation a4" placeholder="Image Path">
-            <br>
-            <button class="animation a6">UPLOAD FILE</button></div>
-        </div>
-      <div class="right"></div>
+        <form action="/upload-file" method="POST">
+            <div class="form-input">
+                <input type="text" class="form-field animation a3" name="app-id"  placeholder="Application ID">
+                <input type="text" class="form-field animation a4" name='image-path' placeholder="Image Path">
+                <br>
+                <button type="submit" name="upload_btn"> UPLOAD FILE </button>
+            </div>
+        </form>
+          <br><br>
+          <a href="{{ url_for('logout') }}" class="text-center">LOGOUT</a>
+      </div>
+      <div class="right">
+      </div>
     </div>
   </body>
 </html>

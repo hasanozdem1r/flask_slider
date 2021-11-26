@@ -22,16 +22,17 @@
 }
  .right {
 	 flex: 1;
-	 background-color: black;
+	 background-color: transparent;
 	 transition: 1s;
-	 background-image: url(https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2250&q=80);
-	 background-size: cover;
+	 background-size: contain;
 	 background-repeat: no-repeat;
 	 background-position: center;
+	 border: 2px solid #F1592A;
+	 width: 50%;
 }
  .header > h2 {
 	 margin: 0;
-	 color: #4f46a5;
+	 color: #F1592A;
 }
  .header > h4 {
 	 margin-top: 10px;
@@ -39,15 +40,15 @@
 	 font-size: 15px;
 	 color: rgba(0, 0, 0, .4);
 }
- .form {
+ .form-input {
 	 max-width: 80%;
 	 display: flex;
 	 flex-direction: column;
 }
- .form > p {
+ .form-input > p {
 	 text-align: right;
 }
- .form > p > a {
+ .form-input > p > a {
 	 color: #000;
 	 font-size: 14px;
 }
@@ -64,10 +65,10 @@
  .form-field:focus {
 	 border-color: #0f7ef1;
 }
- .form > button {
+ .form-input > button {
 	 padding: 12px 10px;
 	 border: 0;
-	 background: linear-gradient(to right, #de48b5 0%, #0097ff 100%);
+	 background: linear-gradient(to right, #F1592A 0%, #c4fc00 100%);
 	 border-radius: 3px;
 	 margin-top: 10px;
 	 color: #fff;

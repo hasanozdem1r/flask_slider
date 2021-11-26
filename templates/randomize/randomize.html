@@ -13,6 +13,7 @@
 </head>
 
 <body>
+
     <div class="container">
         <form action="{{ url_for('random_select') }}" method="post">
             <div class="content">
@@ -23,17 +24,20 @@
                     {% endfor %}
 
                 </select>
-                <button type="submit">Game Randomizer</button>
+                <button type="submit" name="randomize_btn" value="randomize_btn">Game Randomizer</button>
             </div>
         </form>
-
+        <form action="{{ url_for('random_select') }}" method="post">
+            <button type="submit" name="upload_btn" value="upload_btn" href="{{ url_for('upload_file') }}">Upload File</button>
+            <button type="submit" name="logout_btn" value="logout_btn" href="{{ url_for('logout') }}">Logout</button>
+        </form>
     </div>
     <div class="container">
         <div class="slider-1">
              {% if req_method == 'GET' %}
                 {% block req_get_slider1 %}
                      {% for image_path in images_path %}
-                         <img src="{{ url_for('static', filename='img/default/'+image_path)}}" alt="">
+                         <img src="{{ url_for('static', filename='img/img_random/'+image_path)}}" alt="">
                      {% endfor %}
                 {% endblock req_get_slider1 %}
             {% else %}
@@ -48,7 +52,7 @@
              {% if req_method == 'GET' %}
                 {% block req_get_slider2 %}
                      {% for image_path in images_path %}
-                         <img src="{{ url_for('static', filename='img/default/'+image_path)}}" alt="">
+                         <img src="{{ url_for('static', filename='img/img_random/'+image_path)}}" alt="">
                      {% endfor %}
                 {% endblock req_get_slider2 %}
             {% else %}
