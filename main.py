@@ -105,7 +105,25 @@ def random_select():
 @app.route('/upload_file')
 @login_required
 def upload_file():
-    return render_template('upload/upload.html')
+    if request.method == 'GET':
+        image_path = 'paşam1.jpg'
+        return render_template('upload/upload.html', image_path=image_path, req_method=request.method)
+    elif request.method == 'POST':
+        try:
+            # all form fields are filled
+            if request.form.get('app-id') and request.form.get('image-path'):
+                image_path = str(request.form.get('image-path'))
+                converted_img = str(convert_to_webp(Path(image_path)))
+                converted_img = converted_img[converted_img.index('d\\') + 2::]
+                return render_template('upload/upload.html', image_path=converted_img, req_method=request.method)
+            # form include wrong parameters
+            else:
+                informative_msg = {"Message": 'Parameters are not valid'}
+                response = jsonify(informative_msg)
+                response.status_code = 201
+                return response
+        except Exception as error:
+            return render_template("upload/upload.html")
 
 
 if __name__ == '__main__':
