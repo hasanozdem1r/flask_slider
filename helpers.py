@@ -1,5 +1,17 @@
-from flask import request
+from flask import request,session,redirect,url_for,flash
 from requests import get
+from functools import wraps
+
+def login_required(func):
+    @wraps(func)
+    def wrap(*args, **kwargs):
+        if 'logged_in' in session:
+            return func(*args, **kwargs)
+        else:
+            flash("You need to login first")
+            return redirect(url_for('welcome_page'))
+
+    return wrap
 
 
 def get_form_data_signup() -> tuple:
