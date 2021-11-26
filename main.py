@@ -1,11 +1,13 @@
-from flask import render_template, request, redirect, url_for,flash,session
+from flask import render_template, request, redirect, url_for, session, jsonify, flash
 from app import app
 # helper methods for retrieve data and api call
-from helpers import get_form_data_signup, get_form_data_login, get_app_id, get_apps_name, get_images_path
+from helpers import get_form_data_signup, get_form_data_login, get_app_id, \
+    get_apps_name, get_images_path, login_required
 # database operations
 from model import close_connection, create_record, user_authentication
-from functools import wraps
-
+# converting library
+from convert_image import convert_to_webp
+from pathlib import Path
 
 def login_required(func):
     @wraps(func)
@@ -34,7 +36,7 @@ def welcome_page():
             email, password = get_form_data_login()
             # database operations managed well.
             # authentication or query parameters passed well
-            #FIXME exception part can be better
+            # FIXME exception part can be better
             try:
                 # query and data preparation
                 sql_query: str = "SELECT * FROM apps_case_study.users WHERE email=%s AND password=%s;"
@@ -43,9 +45,9 @@ def welcome_page():
                 account, connection, db_cursor = user_authentication(sql_query, query_data)
                 # email and password matched. Sign in successful
                 if account:
-                    session['logged_in']=True
+                    session['logged_in'] = True
                     close_connection(connection, db_cursor)
-                    return redirect("random_select")
+                    return redirect(url_for('random_select'))
                 # email and password did not matched. Sign in unsuccessful
                 else:
                     close_connection(connection, db_cursor)
@@ -75,11 +77,18 @@ def welcome_page():
                 # database crud operations
                 db_cursor, connection = create_record(sql_query, query_data)
                 close_connection(connection, db_cursor)
-                return redirect("random_select")
+                return redirect(url_for("random_select"))
 
 
-# http://127.0.0.1.5000/random_select
-@app.route('/random_select', methods=['GET', 'POST'])
+@app.route('/logout')
+def logout():
+    session.clear()
+    flash("You have been logged out!")
+    return redirect(url_for('welcome_page'))
+
+
+# http://127.0.0.1.5000/random-select
+@app.route('/random-select', methods=['GET', 'POST'])
 @login_required
 def random_select():
     # get apps name with api call to fulfill dropdown
