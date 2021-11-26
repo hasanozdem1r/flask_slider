@@ -9,16 +9,6 @@ from model import close_connection, create_record, user_authentication
 from convert_image import convert_to_webp
 from pathlib import Path
 
-def login_required(func):
-    @wraps(func)
-    def wrap(*args, **kwargs):
-        if 'logged_in' in session:
-            return func(*args, **kwargs)
-        else:
-            flash("You need to login first")
-            return redirect(url_for('welcome_page'))
-
-    return wrap
 
 # http://127.0.0.1.5000
 @app.route('/', methods=['GET', 'POST'])
@@ -98,20 +88,26 @@ def random_select():
         images_path: list = ['paşam1.jpg', 'paşam2.jpg']
         return render_template('randomize/randomize.html', req_method=request.method, apps_name=apps_name,
                                images_path=images_path)
+
     # user selected a game and system picked random game
     elif request.method == 'POST':
-        # get selected item from drop down
-        selected_item: str = str(request.form.get('game_select'))
-        # get app id with api call
-        app_id = get_app_id(selected_item)
-        # get all images path with app id via api call to full fill slider
-        images_path = get_images_path(app_id)
-        return render_template('randomize/randomize.html', req_method=request.method, apps_name=apps_name,
-                               images_path=images_path)
+        if request.form.get('randomize_btn'):
+            # get selected item from drop down
+            selected_item: str = str(request.form.get('game_select'))
+            # get app id with api call
+            app_id = get_app_id(selected_item)
+            # get all images path with app id via api call to full fill slider
+            images_path = get_images_path(app_id)
+            return render_template('randomize/randomize.html', req_method=request.method, apps_name=apps_name,
+                                   images_path=images_path)
+        elif request.form.get('upload_btn'):
+            return redirect(url_for('upload_file'))
+        elif request.form.get('logout_btn'):
+            return redirect(url_for('logout'))
 
 
-# http://127.0.0.1.5000/upload_file
-@app.route('/upload_file')
+# http://127.0.0.1.5000/upload-file
+@app.route('/upload-file', methods=['GET', 'POST'])
 @login_required
 def upload_file():
     if request.method == 'GET':
