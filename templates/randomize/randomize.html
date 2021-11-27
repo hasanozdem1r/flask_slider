@@ -1,19 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- GENERAL SETTINGS FOR RESPONSIVE DESIGN AND GOOLE SEO -->
     <meta charset="UTF-8">
-    <title>GAME UPLOAD</title>
+    <title>SELECT GAME | APPS</title>
     <!-- IMPORTING STATIC FILES : CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/randomize/randomize.css')}}">
     <!-- IMPORTING STATIC FILES : JS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="  crossorigin="anonymous"></script>
     <script src="{{ url_for('static', filename='js/randomize/randomize.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-
 </head>
 
 <body>
-
+    <!-- REDIRECTION TO OTHER PAGES -->
+    <form action="{{ url_for('random_select') }}" method="post">
+         <nav>
+            <div class="upload">
+                <a name="upload_btn" value="upload_btn" href="{{ url_for('upload_file') }}">UPLOAD FILE</a>
+            </div>
+            <div class="login">
+                <a type="submit" name="logout_btn" value="logout_btn" href="{{ url_for('logout') }}">LOGOUT</a>
+            </div>
+        </nav>
+    </form>
+    <!-- CONTAINER 1  -->
     <div class="container">
         <form action="{{ url_for('random_select') }}" method="post">
             <div class="content">
@@ -22,20 +33,27 @@
                     {% for app_name in apps_name %}
                     <option value="{{ app_name }}">{{ app_name}}</option>
                     {% endfor %}
-
                 </select>
                 <button type="submit" name="randomize_btn" value="randomize_btn">Game Randomizer</button>
+                <br><br><br><br><br>
+                <!-- INFORMATIVE USER MESSAGES -->
+                {% with messages = get_flashed_messages() %}
+                  {% if messages %}
+                    {% for message in messages %}
+                      <p id='hideMe'>{{ message }}</p>
+                    {% endfor %}
+                  {% endif %}
+                {% endwith %}
             </div>
         </form>
-        <form action="{{ url_for('random_select') }}" method="post">
-            <button type="submit" name="upload_btn" value="upload_btn" href="{{ url_for('upload_file') }}">Upload File</button>
-            <button type="submit" name="logout_btn" value="logout_btn" href="{{ url_for('logout') }}">Logout</button>
-        </form>
     </div>
+    <!-- CONTAINER 2  -->
     <div class="container">
+        <!-- SLIDER 1  -->
         <div class="slider-1">
-             {% if req_method == 'GET' %}
+             {% if game_selected == False %}
                 {% block req_get_slider1 %}
+                     {% set images_path=['paşam1.jpg', 'paşam2.jpg'] %}
                      {% for image_path in images_path %}
                          <img src="{{ url_for('static', filename='img/img_random/'+image_path)}}" alt="">
                      {% endfor %}
@@ -48,9 +66,11 @@
                 {% endblock reg_post_slider1 %}
             {% endif %}
         </div>
+         <!-- SLIDER 2  -->
         <div class="slider-2">
-             {% if req_method == 'GET' %}
+             {% if game_selected == False %}
                 {% block req_get_slider2 %}
+                    {% set images_path=['paşam1.jpg', 'paşam2.jpg'] %}
                      {% for image_path in images_path %}
                          <img src="{{ url_for('static', filename='img/img_random/'+image_path)}}" alt="">
                      {% endfor %}

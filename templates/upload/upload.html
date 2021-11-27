@@ -1,11 +1,14 @@
 <!doctype html>
 <html lang="en">
   <head>
+   <!-- GENERAL SETTINGS FOR RESPONSIVE DESIGN AND GOOLE SEO -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>UPLOAD IMAGE | APPS</title>
+    <!-- IMPORTING STATIC FILES : CSS -->
     <link rel="stylesheet" href="{{ url_for('static',filename='css/upload/upload.css') }}">
+   <!-- BACKGROUND IMAGE SELECTION | INNER CSS-->
     <style>
            .right {
             {% if req_method == 'GET' %}
@@ -29,7 +32,9 @@
     </style>
   </head>
   <body>
+    <!-- MAIN CONTAINER -->
     <div class="container">
+     <!-- LEFT ITEMS -->
       <div class="left">
         <div class="header">
              <img src="{{ url_for('static',filename='img/img_random/apps_logo.png') }}" alt="" width="300" height="150">
@@ -37,15 +42,17 @@
               <h2 class="animation a1">Upload Images</h2>
               <h4 class="animation a2">Please fulfill all mandatory fields</h4>
         </div>
+        <!-- UPLOAD IMAGE FORM -->
         <form action="/upload-file" method="POST">
             <div class="form-input">
-                <input type="text" class="form-field animation a3" name="app-id"  placeholder="Application ID" required="">
-                <input type="text" class="form-field animation a4" name='image-path' placeholder="Image Path" required="">
+                <input type="text" class="form-field animation a3" name="app-id"  placeholder="Application ID">
+                <input type="text" class="form-field animation a4" name='image-path' placeholder="Image Path">
                 <br>
+                <!-- INFORMATIVE USER MESSAGES -->
                 {% with messages = get_flashed_messages() %}
                   {% if messages %}
                     {% for message in messages %}
-                      {{ message }}
+                       {{ message }}
                     {% endfor %}
                   {% endif %}
                 {% endwith %}
@@ -54,11 +61,13 @@
             </div>
         </form>
         <br>
+        <!-- REDIRECTION TO OTHER PAGES -->
         <div style="display: flex;justify-content: space-between;">
           <a href="{{ url_for('random_select') }}" class="text-center" style="flex-basis: 80.5%;color:#F1592A ">APPS GAME SELECTION</a>
           <a href="{{ url_for('logout') }}" class="text-center" style="flex-basis: 49.5%;color:#F1592A ">LOGOUT</a>
         </div>
       </div>
+      <!-- RIGHT ITEMS -->
       <div class="right">
       </div>
     </div>
