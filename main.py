@@ -15,8 +15,8 @@ from pathlib import Path
 @app.route('/', methods=['GET', 'POST'])
 def welcome_page():
     """
-    This method is used to redirect sign in and sign up page.
-    Method allows users to sign in and sign up to system
+    This method called when user requested  http://127.0.0.1.5000/
+    In this route user can register or sign in to the system
     :return: <flask.Response> HTML view
     """
     # user called http://127.0.0.1.5000/
@@ -43,10 +43,12 @@ def welcome_page():
                 # email and password did not matched. Sign in unsuccessful
                 else:
                     close_connection(connection, db_cursor)
+                    flash('Oops, your email or password is incorrect.')
                     return redirect(url_for('welcome_page'))
             # database related error.
             # authentication or query based reasons
             except Exception as error:
+                flash('Internal Error.Please contact site administrator.')
                 return redirect(url_for('welcome_page'))
         # user submitted sign up
         elif request.form.get("signup_btn"):
