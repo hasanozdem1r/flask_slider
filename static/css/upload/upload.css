@@ -1,3 +1,4 @@
+/* GENERAL DESIGN */
 @import url('https://fonts.googleapis.com/css?family=Rubik:400,500&display=swap');
  * {
 	 box-sizing: border-box;
@@ -10,6 +11,7 @@
 	 display: flex;
 	 height: 100vh;
 }
+ /* CONTAINER LEFT */
  .left {
 	 overflow: hidden;
 	 display: flex;
@@ -22,6 +24,7 @@
 	 animation-delay: 1s;
 	 background-color: #dddddd;
 }
+ /* CONTAINER RIGHT */
  .right {
 	 flex: 1;
 	 background-color: #dddddd;
@@ -42,6 +45,7 @@
 	 font-size: 15px;
 	 color: rgba(0, 0, 0, .4);
 }
+ /* FORM DESIGN */
  .form-input {
 	 max-width: 80%;
 	 display: flex;
@@ -77,6 +81,7 @@
 	 letter-spacing: 1px;
 	 font-family: 'Rubik', sans-serif;
 }
+ /* ANIMATION */
  .animation {
 	 animation-name: move;
 	 animation-duration: 0.4s;
@@ -121,3 +126,10 @@
 		 width: 440px;
 	}
 }
+ /* HOVER FOR A TAG */
+ .redirection{
+	 padding: 2px;
+ }
+ .redirection:hover{
+	 background-color: #F1592A;
+ }
