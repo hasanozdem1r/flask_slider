@@ -7,9 +7,9 @@ from helpers import get_form_data_signup, get_form_data_login, get_app_id, \
 # database operations
 from model import close_connection, create_record, user_authentication
 # converting library
-from image_operations import convert_to_webp, move_converted_file
+from image_operations import convert_to_webp, move_converted_file,randomizer
 from pathlib import Path
-
+from random import choice
 
 # http://127.0.0.1.5000
 @app.route('/', methods=['GET', 'POST'])
@@ -116,15 +116,20 @@ def random_select():
                     game_selected=False
                     # return response
                     return render_template('randomize/randomize.html', game_selected=game_selected, apps_name=apps_name)
+                # false mean game is not picked
+                randomized_game=choice(apps_name)
                 # if item is valid assign value of game_selected
                 game_selected = True
                 # get app id with api call
-                app_id = get_app_id(selected_item)
+                app_id_1 = get_app_id(selected_item)
+                app_id_2=get_app_id(randomized_game)
+                print(app_id_2)
                 # get all images path with app id via api call to fulfill slider data
-                images_path = get_images_path(app_id)
+                images_path_1 = get_images_path(app_id_1)
+                images_path_2 = get_images_path(app_id_2)
                 # return response
                 return render_template('randomize/randomize.html', game_selected=game_selected, apps_name=apps_name,
-                                       images_path=images_path)
+                                       images_path_1=images_path_1,images_path_2=images_path_2)
             elif request.form.get('upload_btn'):
                 # redirect to upload-file
                 return redirect(url_for('upload_file'))

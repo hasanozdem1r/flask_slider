@@ -60,12 +60,13 @@
                 {% endblock req_get_slider1 %}
             {% else %}
                 {% block reg_post_slider1 %}
-                     {% for image_path in images_path %}
+                     {% for image_path in images_path_1 %}
                          <img src="{{ url_for('static', filename='img/app_images/'+image_path)}}" alt="">
                      {% endfor %}
                 {% endblock reg_post_slider1 %}
             {% endif %}
         </div>
+
          <!-- SLIDER 2  -->
         <div class="slider-2">
              {% if game_selected == False %}
@@ -77,14 +78,12 @@
                 {% endblock req_get_slider2 %}
             {% else %}
                 {% block reg_post_slider2 %}
-                     {% for image_path in images_path %}
+                     {% for image_path in images_path_2 %}
                          <img src="{{ url_for('static', filename='img/app_images/'+image_path)}}" alt="">
                      {% endfor %}
                 {% endblock reg_post_slider2 %}
             {% endif %}
         </div>
     </div>
-
 </body>
-
 </html>
