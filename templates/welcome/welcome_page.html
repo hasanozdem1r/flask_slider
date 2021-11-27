@@ -24,6 +24,14 @@
 					<input type="text" name="usrnm" placeholder="Username" required="">
 					<input type="email" name="eml" placeholder="Email" required="">
 					<input type="password" name="pswd" placeholder="Password" required="">
+                    <!-- INFORMATIVE USER MESSAGES -->
+                    {% with messages = get_flashed_messages() %}
+                      {% if messages %}
+                        {% for message in messages %}
+                           <p style="text-align: center">{{ message }}</p>
+                        {% endfor %}
+                      {% endif %}
+                    {% endwith %}
 					<button type="submit" name="signup_btn" value="Sign up">Sign up</button>
 				</form>
 			</div>
