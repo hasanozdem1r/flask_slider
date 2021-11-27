@@ -70,9 +70,14 @@ def welcome_page():
                 close_connection(connection, db_cursor)
                 return redirect(url_for("random_select"))
 
-
+# http://127.0.0.1.5000/logout
 @app.route('/logout')
 def logout():
+    """
+    This method called when user requested  http://127.0.0.1.5000/logout
+    In this route user system clear session
+    :return: redirect user to welcome_page
+    """
     session.clear()
     flash("You have been logged out!")
     return redirect(url_for('welcome_page'))
