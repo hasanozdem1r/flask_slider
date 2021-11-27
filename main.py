@@ -116,28 +116,47 @@ def random_select():
 @app.route('/upload-file', methods=['GET', 'POST'])
 @login_required
 def upload_file():
+    """
+    This method called when user requested http://127.0.0.1.5000/upload-file
+    In this route user can upload image via path and system convert image to webp format
+    :return: webp format image and informative message
+    """
+    # user called http://127.0.0.1.5000/upload-file
     if request.method == 'GET':
         return render_template('upload/upload.html', req_method=request.method)
+    # user submitted form
     elif request.method == 'POST':
         try:
             # all form fields are filled
             if request.form.get('app-id') and request.form.get('image-path'):
+                # req_status used to determine form is valid or not
                 req_status=True
+                # retrieve form data
                 app_id=str(request.form.get('app-id'))
                 image_path = str(request.form.get('image-path'))
+                # convert image from any to webp
                 converted_img = str(convert_to_webp(Path(image_path)))
                 converted_img = converted_img.replace("\\", "/", )
+                # move converted file from given path to under static folder
                 file_name = move_converted_file(converted_img,
                                                 'D:/my_works/Not_Important/INTERVIEW-TASKS/APSS_POC/static/img'
                                                 '/uploaded_images')
+                # inform user about success
                 flash(f'Image {app_id} successfully uploaded')
+                # return response
                 return render_template('upload/upload.html', image_path=file_name, req_status=req_status)
             # form include wrong parameters
             else:
+                # req_status used to determine form is valid or not
                 req_status = False
+                # inform user about failure
                 flash('Please fulfill fields in valid format')
+                # return response
                 return render_template('upload/upload.html', req_status=req_status)
         except Exception as error:
+            # inform user about failure
+            flash('Please Try again')
+            # return response
             return render_template("upload/upload.html")
 
 
