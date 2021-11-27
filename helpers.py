@@ -41,7 +41,7 @@ def get_app_id(selected_item) -> int:
     :param selected_item: <str> application name
     :return: <int> application id
     """
-    app = get(f'http://localhost:80/apps-api/v1/apps/?app-name={selected_item}').json()
+    app = get(f'http://localhost:80/apps-api/v1/apps/id?app-name={selected_item}').json()
     app_id: int = int(app[0][0])
     return app_id
 
@@ -51,7 +51,7 @@ def get_apps_name() -> list:
     This method returns the application names
     :return:  <list> application names
     """
-    apps: list = get("http://localhost:80/apps-api/v1/apps").json()
+    apps: list = get("http://localhost/apps-api/v1/apps").json()
     apps_name: list = [str(app_name)[2:-2] for app_name in apps]
     return apps_name
 
