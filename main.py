@@ -84,26 +84,32 @@ def random_select():
     # get apps name with api call to fulfill dropdown
     apps_name = get_apps_name()
     if request.method == 'GET':
-        # initial images before any app selected
-        images_path: list = ['paşam1.jpg', 'paşam2.jpg']
-        return render_template('randomize/randomize.html', req_method=request.method, apps_name=apps_name,
-                               images_path=images_path)
-
-    # user selected a game and system picked random game
+        game_selected=False
+        return render_template('randomize/randomize.html', game_selected=game_selected, apps_name=apps_name)
     elif request.method == 'POST':
-        if request.form.get('randomize_btn'):
-            # get selected item from drop down
-            selected_item: str = str(request.form.get('game_select'))
-            # get app id with api call
-            app_id = get_app_id(selected_item)
-            # get all images path with app id via api call to full fill slider
-            images_path = get_images_path(app_id)
-            return render_template('randomize/randomize.html', req_method=request.method, apps_name=apps_name,
-                                   images_path=images_path)
-        elif request.form.get('upload_btn'):
-            return redirect(url_for('upload_file'))
-        elif request.form.get('logout_btn'):
-            return redirect(url_for('logout'))
+        try:
+            if request.form.get('randomize_btn'):
+                # get selected item from drop down
+                selected_item: str = str(request.form.get('game_select'))
+                if selected_item=='None':
+                    flash('Please Select Game')
+                    game_selected=False
+                    return render_template('randomize/randomize.html', game_selected=game_selected, apps_name=apps_name)
+                # get app id with api call
+                app_id = get_app_id(selected_item)
+                # get all images path with app id via api call to full fill slider
+                images_path = get_images_path(app_id)
+                # game selected
+                game_selected = True
+                return render_template('randomize/randomize.html', game_selected=game_selected, apps_name=apps_name,
+                                       images_path=images_path)
+            elif request.form.get('upload_btn'):
+                return redirect(url_for('upload_file'))
+            elif request.form.get('logout_btn'):
+                return redirect(url_for('logout'))
+        except Exception as error:
+            flash('Please Select Game')
+            return render_template('randomize/randomize.html')
 
 
 # http://127.0.0.1.5000/upload-file
@@ -117,19 +123,19 @@ def upload_file():
             # all form fields are filled
             if request.form.get('app-id') and request.form.get('image-path'):
                 req_status=True
+                app_id=str(request.form.get('app-id'))
                 image_path = str(request.form.get('image-path'))
                 converted_img = str(convert_to_webp(Path(image_path)))
                 converted_img = converted_img.replace("\\", "/", )
                 file_name = move_converted_file(converted_img,
                                                 'D:/my_works/Not_Important/INTERVIEW-TASKS/APSS_POC/static/img'
                                                 '/uploaded_images')
-                print(file_name)
-                flash('Image successfully uploaded')
+                flash(f'Image {app_id} successfully uploaded')
                 return render_template('upload/upload.html', image_path=file_name, req_status=req_status)
             # form include wrong parameters
             else:
                 req_status = False
-                flash('Please fulfill all mandatory fields')
+                flash('Please fulfill fields in valid format')
                 return render_template('upload/upload.html', req_status=req_status)
         except Exception as error:
             return render_template("upload/upload.html")
