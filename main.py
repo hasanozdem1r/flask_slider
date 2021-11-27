@@ -1,3 +1,4 @@
+import flask
 from flask import render_template, request, redirect, url_for, session, jsonify, flash
 from app import app
 # helper methods for retrieve data and api call
@@ -81,34 +82,52 @@ def logout():
 @app.route('/random-select', methods=['GET', 'POST'])
 @login_required
 def random_select():
+    """
+    This method called when user requested http://127.0.0.1.5000/random-select
+    In this route user can select game and game images will be previewed user which is already in database
+    :return: selected game messages
+    """
     # get apps name with api call to fulfill dropdown
     apps_name = get_apps_name()
+    # user called http://127.0.0.1.5000/upload-file
     if request.method == 'GET':
+        # assign value of game_selected
         game_selected=False
         return render_template('randomize/randomize.html', game_selected=game_selected, apps_name=apps_name)
+    # user submitted selection
     elif request.method == 'POST':
         try:
+            # if user submitted
             if request.form.get('randomize_btn'):
                 # get selected item from drop down
                 selected_item: str = str(request.form.get('game_select'))
+                # if item is invalid
                 if selected_item=='None':
+                    # inform user about failure
                     flash('Please Select Game')
+                    # assign value of game_selected
                     game_selected=False
+                    # return response
                     return render_template('randomize/randomize.html', game_selected=game_selected, apps_name=apps_name)
+                # if item is valid assign value of game_selected
+                game_selected = True
                 # get app id with api call
                 app_id = get_app_id(selected_item)
-                # get all images path with app id via api call to full fill slider
+                # get all images path with app id via api call to fulfill slider data
                 images_path = get_images_path(app_id)
-                # game selected
-                game_selected = True
+                # return response
                 return render_template('randomize/randomize.html', game_selected=game_selected, apps_name=apps_name,
                                        images_path=images_path)
             elif request.form.get('upload_btn'):
+                # redirect to upload-file
                 return redirect(url_for('upload_file'))
             elif request.form.get('logout_btn'):
+                # redirect to logout
                 return redirect(url_for('logout'))
         except Exception as error:
+            # inform user about failure
             flash('Please Select Game')
+            # return response
             return render_template('randomize/randomize.html')
 
 
@@ -136,6 +155,7 @@ def upload_file():
                 image_path = str(request.form.get('image-path'))
                 # convert image from any to webp
                 converted_img = str(convert_to_webp(Path(image_path)))
+                # replace slashes to handle OS based path errors
                 converted_img = converted_img.replace("\\", "/", )
                 # move converted file from given path to under static folder
                 file_name = move_converted_file(converted_img,
@@ -158,7 +178,6 @@ def upload_file():
             flash('Please Try again')
             # return response
             return render_template("upload/upload.html")
-
 
 if __name__ == '__main__':
     app.run()
