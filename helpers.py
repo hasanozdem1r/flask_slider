@@ -1,6 +1,7 @@
-from flask import request,session,redirect,url_for,flash
+from flask import request, session, redirect, url_for, flash
 from requests import get
 from functools import wraps
+
 
 def login_required(func):
     @wraps(func)
@@ -65,3 +66,7 @@ def get_images_path(app_id: int = 0) -> list:
     images: list = get(f"http://localhost/apps-api/v1/images?app-id={str(app_id)}").json()
     images_path: list = [img_path[1] for img_path in images]
     return images_path
+
+
+if __name__ == '__main__':
+    print('hello')
