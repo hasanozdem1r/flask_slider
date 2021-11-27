@@ -6,7 +6,7 @@ from helpers import get_form_data_signup, get_form_data_login, get_app_id, \
 # database operations
 from model import close_connection, create_record, user_authentication
 # converting library
-from convert_image import convert_to_webp
+from image_operations import convert_to_webp, move_converted_file
 from pathlib import Path
 
 
@@ -111,22 +111,26 @@ def random_select():
 @login_required
 def upload_file():
     if request.method == 'GET':
-        image_path = 'paşam1.jpg'
-        return render_template('upload/upload.html', image_path=image_path, req_method=request.method)
+        return render_template('upload/upload.html', req_method=request.method)
     elif request.method == 'POST':
         try:
             # all form fields are filled
             if request.form.get('app-id') and request.form.get('image-path'):
+                req_status=True
                 image_path = str(request.form.get('image-path'))
                 converted_img = str(convert_to_webp(Path(image_path)))
-                converted_img = converted_img[converted_img.index('d\\') + 2::]
-                return render_template('upload/upload.html', image_path=converted_img, req_method=request.method)
+                converted_img = converted_img.replace("\\", "/", )
+                file_name = move_converted_file(converted_img,
+                                                'D:/my_works/Not_Important/INTERVIEW-TASKS/APSS_POC/static/img'
+                                                '/uploaded_images')
+                print(file_name)
+                flash('Image successfully uploaded')
+                return render_template('upload/upload.html', image_path=file_name, req_status=req_status)
             # form include wrong parameters
             else:
-                informative_msg = {"Message": 'Parameters are not valid'}
-                response = jsonify(informative_msg)
-                response.status_code = 201
-                return response
+                req_status = False
+                flash('Please fulfill all mandatory fields')
+                return render_template('upload/upload.html', req_status=req_status)
         except Exception as error:
             return render_template("upload/upload.html")
 
