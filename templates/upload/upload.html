@@ -10,13 +10,21 @@
            .right {
             {% if req_method == 'GET' %}
                 {% block get_req %}
-                     background-image: url({{ url_for('static', filename='img/img_upload/'+image_path)}});
+                     background-image: url({{ url_for('static', filename='img/img_upload/paşam1.webp')}});
                 {% endblock get_req %}
             {% else %}
                 {% block post_req %}
-                     background-image: url({{ url_for('static', filename='img/img_upload/'+image_path)}});
+                    {% if req_status == True %}
+                        {% block req_true %}
+                             background-image: url({{ url_for('static', filename='img/uploaded_images/'+image_path)}});
+                        {% endblock req_true %}
+                    {% else %}
+                        {% block req_false %}
+                             background-image: url(https://thumbs.dreamstime.com/b/try-again-motivation-inscription-splash-paint-letters-try-again-motivation-vector-inscription-splash-paint-letters-196526690.jpg);
+                        {% endblock req_false %}
+                    {% endif %}
                 {% endblock post_req %}
-            {% endif %}
+           {% endif %}
            }
     </style>
   </head>
@@ -25,20 +33,31 @@
       <div class="left">
         <div class="header">
              <img src="{{ url_for('static',filename='img/img_random/apps_logo.png') }}" alt="" width="300" height="150">
-              <br><br><br><br><br>
+              <br><br>
               <h2 class="animation a1">Upload Images</h2>
               <h4 class="animation a2">Please fulfill all mandatory fields</h4>
         </div>
         <form action="/upload-file" method="POST">
             <div class="form-input">
-                <input type="text" class="form-field animation a3" name="app-id"  placeholder="Application ID">
-                <input type="text" class="form-field animation a4" name='image-path' placeholder="Image Path">
+                <input type="text" class="form-field animation a3" name="app-id"  placeholder="Application ID" required="">
+                <input type="text" class="form-field animation a4" name='image-path' placeholder="Image Path" required="">
+                <br>
+                {% with messages = get_flashed_messages() %}
+                  {% if messages %}
+                    {% for message in messages %}
+                      {{ message }}
+                    {% endfor %}
+                  {% endif %}
+                {% endwith %}
                 <br>
                 <button type="submit" name="upload_btn"> UPLOAD FILE </button>
             </div>
         </form>
-          <br><br>
-          <a href="{{ url_for('logout') }}" class="text-center">LOGOUT</a>
+        <br>
+        <div style="display: flex;justify-content: space-between;">
+          <a href="{{ url_for('random_select') }}" class="text-center" style="flex-basis: 80.5%;color:#F1592A ">APPS GAME SELECTION</a>
+          <a href="{{ url_for('logout') }}" class="text-center" style="flex-basis: 49.5%;color:#F1592A ">LOGOUT</a>
+        </div>
       </div>
       <div class="right">
       </div>

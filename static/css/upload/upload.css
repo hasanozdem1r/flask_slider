@@ -4,6 +4,7 @@
 }
  body {
 	 font-family: 'Rubik', sans-serif;
+
 }
  .container {
 	 display: flex;
@@ -19,10 +20,11 @@
 	 animation-duration: 1s;
 	 animation-fill-mode: both;
 	 animation-delay: 1s;
+	 background-color: #dddddd;
 }
  .right {
 	 flex: 1;
-	 background-color: transparent;
+	 background-color: #dddddd;
 	 transition: 1s;
 	 background-size: contain;
 	 background-repeat: no-repeat;
