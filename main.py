@@ -19,15 +19,16 @@ def welcome_page():
     Method allows users to sign in and sign up to system
     :return: <flask.Response> HTML view
     """
+    # user called http://127.0.0.1.5000/
     if request.method == 'GET':
         return render_template('welcome/welcome_page.html')
+    # user submitted form
     elif request.method == 'POST':
-        # user sign in
+        # user submitted sign in
         if request.form.get("signin_btn"):
             email, password = get_form_data_login()
             # database operations managed well.
             # authentication or query parameters passed well
-            # FIXME exception part can be better
             try:
                 # query and data preparation
                 sql_query: str = "SELECT * FROM apps_case_study.users WHERE email=%s AND password=%s;"
@@ -46,8 +47,8 @@ def welcome_page():
             # database related error.
             # authentication or query based reasons
             except Exception as error:
-                return f'{error}'
-        # user sign up
+                return redirect(url_for('welcome_page'))
+        # user submitted sign up
         elif request.form.get("signup_btn"):
             username, email, password = get_form_data_signup()
             # query and data preparation
@@ -79,7 +80,6 @@ def logout():
     :return: redirect user to welcome_page
     """
     session.clear()
-    flash("You have been logged out!")
     return redirect(url_for('welcome_page'))
 
 
