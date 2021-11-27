@@ -5,15 +5,24 @@ Website include totally 3 different pages. Login, Random_Match and upload files
 
 ## Installation
 
-Explanation TO BE DONE
-
+Clone repository
+```bash
+git clone https://github.com/hasanozdem1r/POC_APPS.git
+```
+Download all required packages / libraries
 ```bash
 pip install requirements.txt
+```
+Environment preparation
+```bash
+cd your_downloaded_folder/APPS_POC/
+set FLASK_APP=main
+flask run
 ```
 
 ## Usage
 
-TO BE DONE
+Please read [USAGE.md](DOCS/USAGE.md)
 
 ## Project Timeline
 
